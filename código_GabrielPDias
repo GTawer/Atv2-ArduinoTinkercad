@@ -1,0 +1,106 @@
+//define o led do andar 1 no pino 13
+#define led1 13
+//define o led do andar 2 no pino 12
+#define led2 12
+//define o led do andar 3 no pino 11
+#define led3 11
+//define o led do andar 4 no pino 10
+#define led4 10
+//define o led do andar 5 no pino 9
+#define led5 9
+//define o led do andar 6 no pino 8
+#define led6 8
+
+//define o botao do andar 1 no pino 7
+#define bot1 7
+//define o botao do andar 2 no pino 6
+#define bot2 6
+//define o botao do andar 3 no pino 5
+#define bot3 5
+//define o botao do andar 4 no pino 4
+#define bot4 4
+//define o botao do andar 5 no pino 3
+#define bot5 3
+//define o botao do andar 6 no pino 2
+#define bot6 2
+
+//variavel que guarda o andar solicitado pelo usuario
+int andar = 0;
+//variavel q indica o andar ATUAL
+int andarAtual = 1;
+//variavel que considera o tempo de espera do elevador
+int espera = 2000;
+
+void setup() {
+  //configuração dos led dos andares
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);
+  pinMode(led4, OUTPUT);
+  pinMode(led5, OUTPUT);
+  pinMode(led6, OUTPUT);
+
+  //CONFIGURAÇÃO DOS BOTÕES
+  pinMode(bot1, INPUT);
+  pinMode(bot2, INPUT);
+  pinMode(bot3, INPUT);
+  pinMode(bot4, INPUT);
+  pinMode(bot5, INPUT);
+  pinMode(bot6, INPUT);
+
+  //LIGA O LED DO ANDAR 1, INDICA Q O ELEVADOR COMEÇA NO PRIMEIRO ANDAR
+  digitalWrite(led1, HIGH);
+}
+
+void loop() {
+  //verifica se os botoes foram pressionados
+  if (digitalRead(bot1) == HIGH) andar = 1;
+  if (digitalRead(bot2) == HIGH) andar = 2;
+  if (digitalRead(bot3) == HIGH) andar = 3;
+  if (digitalRead(bot4) == HIGH) andar = 4;
+  if (digitalRead(bot5) == HIGH) andar = 5;
+  if (digitalRead(bot6) == HIGH) andar = 6;
+
+  //verifica qual andar foi solicitado e faz o elevador andar, operador "!" significa "diferente de..."
+  if (andar != 0 && andar != andarAtual) {
+
+    //logica para subir o elevador
+    while (andarAtual < andar) {
+      delay(espera);
+      digitalWrite(led1, LOW);
+      digitalWrite(led2, LOW); 
+      digitalWrite(led3, LOW);
+      digitalWrite(led4, LOW);
+      digitalWrite(led5, LOW);
+      digitalWrite(led6, LOW);
+      
+      andarAtual++;
+      
+      if (andarAtual == 1) digitalWrite(led1, HIGH);
+      if (andarAtual == 2) digitalWrite(led2, HIGH);
+      if (andarAtual == 3) digitalWrite(led3, HIGH);
+      if (andarAtual == 4) digitalWrite(led4, HIGH);
+      if (andarAtual == 5) digitalWrite(led5, HIGH);
+      if (andarAtual == 6) digitalWrite(led6, HIGH);
+    }
+
+    //logica para descer os andares do elevador
+    while (andarAtual > andar) {
+      delay(espera);
+      digitalWrite(led1, LOW); digitalWrite(led2, LOW); digitalWrite(led3, LOW);
+      digitalWrite(led4, LOW); digitalWrite(led5, LOW); digitalWrite(led6, LOW);
+      
+      andarAtual--;
+
+      if (andarAtual == 1) digitalWrite(led1, HIGH);
+      if (andarAtual == 2) digitalWrite(led2, HIGH);
+      if (andarAtual == 3) digitalWrite(led3, HIGH);
+      if (andarAtual == 4) digitalWrite(led4, HIGH);
+      if (andarAtual == 5) digitalWrite(led5, HIGH);
+      if (andarAtual == 6) digitalWrite(led6, HIGH);
+    }
+    
+    //limpa a variavel para o proximo comando
+    andar = 0;
+  }
+}
