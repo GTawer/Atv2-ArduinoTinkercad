@@ -28,7 +28,7 @@ Para atender aos requisitos do desafio, a lógica foi expandida da seguinte form
 ---
 
 ## 🔗 Link do Projeto
-* [Acesse aqui o projeto no Tinkercad - Gabriel Torres de Araujo](https://www.tinkercad.com/things/6H1Tybntjo4-elevador-de-6-andares)
+* [Acesse aqui o projeto no Tinkercad - Gabriel de Araujo Torres](https://www.tinkercad.com/things/6H1Tybntjo4-elevador-de-6-andares)
 * [Acesse aqui o projeto no Tinkercad - Gabriel Pereira Dias](https://www.tinkercad.com/things/0MmbqbKCpXb-terrific-luulia)
 
 ---
