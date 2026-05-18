@@ -1,0 +1,129 @@
+
+//Autor: Gabriel A. Torres
+// C ++
+
+// Projeto: Elevador de 6 Andares
+
+// Definição dos LEDs 
+#define led1 13
+#define led2 12
+#define led3 11
+#define led4 10
+#define led5 9
+#define led6 8
+
+// Definição dos Botões 
+#define bot1 7
+#define bot2 6
+#define bot3 5
+#define bot4 4
+#define bot5 3
+#define bot6 2
+
+int andar;    // Guarda o andar que o usuário clicou
+int atual = 1; // Guarda onde o elevador está (começa no 1)
+
+void setup() {
+  // Configura todos os LEDs como Saída
+  pinMode(led1, OUTPUT); pinMode(led2, OUTPUT); pinMode(led3, OUTPUT);
+  pinMode(led4, OUTPUT); pinMode(led5, OUTPUT); pinMode(led6, OUTPUT);
+
+  // Configura todos os botões como Entrada
+  pinMode(bot1, INPUT); pinMode(bot2, INPUT); pinMode(bot3, INPUT);
+  pinMode(bot4, INPUT); pinMode(bot5, INPUT); pinMode(bot6, INPUT);
+
+  // Inicia o sistema com o LED do 1º andar aceso
+  digitalWrite(led1, HIGH);
+}
+
+void loop() {
+  // LEITURA DOS BOTÕES 
+  // Se o botão for pressionado (HIGH), a variável "andar" 
+  //recebe o número correspondente
+  if (digitalRead(bot1) == HIGH) { andar = 1; }
+  if (digitalRead(bot2) == HIGH) { andar = 2; }
+  if (digitalRead(bot3) == HIGH) { andar = 3; }
+  if (digitalRead(bot4) == HIGH) { andar = 4; }
+  if (digitalRead(bot5) == HIGH) { andar = 5; }
+  if (digitalRead(bot6) == HIGH) { andar = 6; }
+
+  // Só entra na lógica se um botão foi apertado e for diferente 
+  //do andar atual
+  if (andar > 0 && andar != atual) {
+    
+    switch (andar) {
+
+      case 1: // SOLICITAÇÃO PARA O 1º ANDAR 
+        if (atual > 1) {
+          // Se estiver no 6, desce para o 5
+          if (atual >= 6) { digitalWrite(led6, LOW); delay(3000); digitalWrite(led5, HIGH); atual = 5; }
+          // Se estiver no 5, desce para o 4
+          if (atual >= 5) { delay(3000); digitalWrite(led5, LOW); digitalWrite(led4, HIGH); atual = 4; }
+          // Se estiver no 4, desce para o 3
+          if (atual >= 4) { delay(3000); digitalWrite(led4, LOW); digitalWrite(led3, HIGH); atual = 3; }
+          // Se estiver no 3, desce para o 2
+          if (atual >= 3) { delay(3000); digitalWrite(led3, LOW); digitalWrite(led2, HIGH); atual = 2; }
+          // Se estiver no 2, finalmente chega no 1
+          if (atual >= 2) { delay(3000); digitalWrite(led2, LOW); digitalWrite(led1, HIGH); atual = 1; }
+        }
+        break;
+
+      case 2: // SOLICITAÇÃO PARA O 2º ANDAR 
+        if (atual < 2) { // Subindo do 1
+          digitalWrite(led1, LOW); delay(3000); digitalWrite(led2, HIGH); atual = 2;
+        } else if (atual > 2) { // Descendo
+          if (atual >= 6) { digitalWrite(led6, LOW); delay(3000); digitalWrite(led5, HIGH); atual = 5; }
+          if (atual >= 5) { delay(3000); digitalWrite(led5, LOW); digitalWrite(led4, HIGH); atual = 4; }
+          if (atual >= 4) { delay(3000); digitalWrite(led4, LOW); digitalWrite(led3, HIGH); atual = 3; }
+          if (atual >= 3) { delay(3000); digitalWrite(led3, LOW); digitalWrite(led2, HIGH); atual = 2; }
+        }
+        break;
+
+      case 3: // SOLICITAÇÃO PARA O 3º ANDAR 
+        if (atual < 3) { // Subindo
+          if (atual <= 1) { digitalWrite(led1, LOW); delay(3000); digitalWrite(led2, HIGH); atual = 2; }
+          if (atual <= 2) { delay(3000); digitalWrite(led2, LOW); digitalWrite(led3, HIGH); atual = 3; }
+        } else if (atual > 3) { // Descendo
+          if (atual >= 6) { digitalWrite(led6, LOW); delay(3000); digitalWrite(led5, HIGH); atual = 5; }
+          if (atual >= 5) { delay(3000); digitalWrite(led5, LOW); digitalWrite(led4, HIGH); atual = 4; }
+          if (atual >= 4) { delay(3000); digitalWrite(led4, LOW); digitalWrite(led3, HIGH); atual = 3; }
+        }
+        break;
+
+      case 4: // SOLICITAÇÃO PARA O 4º ANDAR 
+        if (atual < 4) { // Subindo
+          if (atual <= 1) { digitalWrite(led1, LOW); delay(3000); digitalWrite(led2, HIGH); atual = 2; }
+          if (atual <= 2) { delay(3000); digitalWrite(led2, LOW); digitalWrite(led3, HIGH); atual = 3; }
+          if (atual <= 3) { delay(3000); digitalWrite(led3, LOW); digitalWrite(led4, HIGH); atual = 4; }
+        } else if (atual > 4) { // Descendo
+          if (atual >= 6) { digitalWrite(led6, LOW); delay(3000); digitalWrite(led5, HIGH); atual = 5; }
+          if (atual >= 5) { delay(3000); digitalWrite(led5, LOW); digitalWrite(led4, HIGH); atual = 4; }
+        }
+        break;
+
+      case 5: // SOLICITAÇÃO PARA O 5º ANDAR
+        if (atual < 5) { // Subindo
+          if (atual <= 1) { digitalWrite(led1, LOW); delay(3000); digitalWrite(led2, HIGH); atual = 2; }
+          if (atual <= 2) { delay(3000); digitalWrite(led2, LOW); digitalWrite(led3, HIGH); atual = 3; }
+          if (atual <= 3) { delay(3000); digitalWrite(led3, LOW); digitalWrite(led4, HIGH); atual = 4; }
+          if (atual <= 4) { delay(3000); digitalWrite(led4, LOW); digitalWrite(led5, HIGH); atual = 5; }
+        } else if (atual > 5) { // Descendo
+          digitalWrite(led6, LOW); delay(3000); digitalWrite(led5, HIGH); atual = 5;
+        }
+        break;
+
+      case 6: // SOLICITAÇÃO PARA O 6º ANDAR
+        if (atual < 6) { // Subindo
+          if (atual <= 1) { digitalWrite(led1, LOW); delay(3000); digitalWrite(led2, HIGH); atual = 2; }
+          if (atual <= 2) { delay(3000); digitalWrite(led2, LOW); digitalWrite(led3, HIGH); atual = 3; }
+          if (atual <= 3) { delay(3000); digitalWrite(led3, LOW); digitalWrite(led4, HIGH); atual = 4; }
+          if (atual <= 4) { delay(3000); digitalWrite(led4, LOW); digitalWrite(led5, HIGH); atual = 5; }
+          if (atual <= 5) { delay(3000); digitalWrite(led5, LOW); digitalWrite(led6, HIGH); atual = 6; }
+        }
+        break;
+    }
+    // Reseta a variável andar para evitar que o elevador
+    //fique em loop
+    andar = 0;
+  }
+}
